@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const errorHandler = require('./middleware/error')
 const morgan = require('morgan')
 // const logger = require('./middleware/logger')
 const connectDB = require('./config/db')
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
 //Mount routers, connect /api/v1/bootcamps to  bootcamps.js just brought in above
 app.use('/api/v1/bootcamps', bootcamps)
 
+app.use(errorHandler)
 // app.get('/api/v1/bootcamps', (req, res) => {
 //   res.status(200).json({ success: true, msg: 'Show all bootcamps.' })
 // });

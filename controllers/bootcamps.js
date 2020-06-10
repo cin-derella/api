@@ -1,5 +1,5 @@
 const Bootcamp = require('../models/Bootcamp')
-
+const ErrorReponse = require('../utils/errorResponse')
 
 //@desc   Get all bootcamps
 //@route  GET /api/v1/bootcamps
@@ -29,17 +29,20 @@ exports.getBootcamps = async (req, res, next) => {
 exports.getBootcamp = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamp.findById(req.params.id);
-    //match the format but not the correct one
+    //is a formatted id but not in db
     if (!bootcamp) {
-      return res.status(400).json({ success: false })
+      //return res.status(400).json({ success: false })
+      return next(new ErrorReponse(`Bootcamp not found with id of ${req.params.id}`, 404));
+
     }
     res.status(200).json({
       success: true,
       data: bootcamp
     })
   } catch (err) {
-    // not match the format
-    res.status(400).json({ success: false })
+    // not a formatted id
+    // res.status(400).json({ success: false })
+    next(new ErrorReponse(`Bootcamp not found with id of ${req.params.id}`, 404));
   }
   //res.status(200).json({ success: true, msg: `Show bootcamp ${req.params.id}` })
 
