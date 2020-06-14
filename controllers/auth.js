@@ -7,5 +7,19 @@ const ErrorReponse = require('../utils/errorResponse')
 //@route  GET /api/v1/auth/register
 //@access Public
 exports.register = asyncHandler(async (req, res, next) => {
+
+  //Method 1: pull things out of req.body and create user
+  const { name, email, password, role } = req.body;
+  const user = await User.create({
+    name,
+    email,
+    password,
+    role
+  });
+
+  //Method 2: create user from req.body
+  //const user = await User.create(req.body);
+
+
   res.status(200).json({ success: true })
 })
