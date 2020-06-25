@@ -14,12 +14,15 @@ const advancedResults = require('../middleware/advancedResults');
 
 // Include other resource routers
 const courseRouter = require('./courses')
+const reviewRouter = require('./reviews')
 
 //router代表一个由express.Router()创建的对象，Router是一个类的extend类
 const router = express.Router();
 
 const { protect, authorize } = require('../middleware/auth');
 
+router.use('/:bootcampId/courses', courseRouter);
+router.use('/:bootcampId/reviews', reviewRouter);
 
 
 router
