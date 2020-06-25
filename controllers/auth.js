@@ -76,7 +76,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return next(new ErrorReponse('There is no user with that email', 404));
+    return next(new ErrorReponse('There is no user with this email', 404));
   }
 
   //Get reset token
