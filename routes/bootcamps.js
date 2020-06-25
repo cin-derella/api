@@ -15,20 +15,12 @@ const advancedResults = require('../middleware/advancedResults');
 // Include other resource routers
 const courseRouter = require('./courses')
 
+//router代表一个由express.Router()创建的对象，Router是一个类的extend类
 const router = express.Router();
 
 const { protect, authorize } = require('../middleware/auth');
 
-//Re-route into other resource routers
-router.use('/:bootcampId/courses', courseRouter);
 
-router
-  .route('/radius/:zipcode/:distance')
-  .get(getBootcampsInRadius);
-
-router
-  .route('/:id/photo')
-  .put(protect, authorize('publisher', 'admin'), bootcampPhotoUpload);
 
 router
   .route('/')
@@ -44,7 +36,16 @@ router
 
 
 
+router
+  .route('/radius/:zipcode/:distance')
+  .get(getBootcampsInRadius);
 
+router
+  .route('/:id/photo')
+  .put(protect, authorize('publisher', 'admin'), bootcampPhotoUpload);
+
+//Re-route into other resource routers
+router.use('/:bootcampId/courses', courseRouter);
 
 
 // router.get('/', (req, res) => {
